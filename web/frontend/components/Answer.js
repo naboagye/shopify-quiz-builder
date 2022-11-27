@@ -8,6 +8,12 @@ export const Answer = ({ updateAnswer, question, answer, _id }) => {
     setText(value);
   };
 
+  // Text
+  const [desc, setDesc] = useState(answer.desc);
+  const handleChangeDesc = (value) => {
+    setDesc(value);
+  };
+
   // Sequence
   const [sequence, setSequence] = useState(answer.sequence);
   const handleChangeSequence = (value) => {
@@ -17,16 +23,32 @@ export const Answer = ({ updateAnswer, question, answer, _id }) => {
   useEffect(() => {
     updateAnswer({
       text,
+      desc,
       sequence,
       _id,
       question,
     });
-  }, [text, sequence, question, _id]);
+  }, [text, desc, sequence, question, _id]);
 
   return (
     <Layout.Section>
       <Stack>
-        <TextField label="Text" value={text} onChange={handleChangeText} type="text" requiredIndicator placeholder="Text" />
+        <TextField
+          label="Text"
+          value={text}
+          onChange={handleChangeText}
+          type="text"
+          requiredIndicator
+          placeholder="Text"
+        />
+        <TextField
+          label="Description"
+          value={desc}
+          onChange={handleChangeDesc}
+          type="text"
+          requiredIndicator
+          placeholder="Description"
+        />
         <TextField
           requiredIndicator
           step={1}

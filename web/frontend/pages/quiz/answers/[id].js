@@ -2,6 +2,7 @@ import { useFindOne } from "@gadgetinc/react";
 import { Page, Button, Card, Layout, Stack } from "@shopify/polaris";
 import { useRouter } from "next/router";
 import { QuestionAnswerForm } from "../../../components/QuestionAnswerForm.js";
+import { MappedQuizAnswers } from "../../../components/MappedQuizAnswers.js";
 import { api } from "./../../../api.js";
 
 export default function Answers() {
@@ -26,6 +27,7 @@ export default function Answers() {
                 node: {
                   id: true,
                   text: true,
+                  description: true,
                 },
               },
             },
@@ -43,6 +45,14 @@ export default function Answers() {
 
     currentQuestions.sort((a, b) => a.node.sequence - b.node.sequence);
 
+    let mappedAnswers = currentQuestions.filter((r) => {
+      return r.node.answers.edges.length != 0;
+    });
+
+    const unmappedCurrentAnswers = currentQuestions.filter(
+      (r) => r.node.answers.edges.length === 0
+    );
+
     return (
       <Page
         title={`Product Recommendation Quiz Machine - Create a Quiz`}
@@ -55,7 +65,8 @@ export default function Answers() {
               title={`Add answers to questions for the ` + quizTitle + ` quiz.`}
             >
               {currentQuiz &&
-                currentQuestions.map((q) => {
+                currentQuestions &&
+                unmappedCurrentAnswers.map((q) => {
                   return (
                     <QuestionAnswerForm
                       key={q.node.id}
@@ -67,15 +78,24 @@ export default function Answers() {
             </Card>
           </Layout.Section>
           <Layout.Section>
+            {mappedAnswers && (
+              <Card sectioned title={`Currently mapped answers`}>
+                <MappedQuizAnswers mappedAnswers={mappedAnswers} />
+              </Card>
+            )}
+          </Layout.Section>
+          <Layout.Section>
             <Card title={"Add results and map quiz"}>
-              <Stack>
+              <Layout.Section>
                 <Button
                   onClick={() => router.push(`/quiz/mapping/${currentQuiz.id}`)}
                 >
                   On to adding results!
                 </Button>
-              </Stack>
+              </Layout.Section>
+              <br />
             </Card>
+            <br />
           </Layout.Section>
         </Layout>
       </Page>

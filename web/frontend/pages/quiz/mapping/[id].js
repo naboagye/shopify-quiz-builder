@@ -164,9 +164,11 @@ export default function Mapping() {
                       View quiz
                     </Button>
                   </Stack>
+                  <br />
                 </Layout.Section>
               </Card>
             )}
+            <br />
           </Layout.Section>
         </Layout>
       </Page>

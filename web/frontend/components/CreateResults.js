@@ -94,7 +94,7 @@ export const CreateResults = ({ quiz, products }) => {
         {quizResults.map((result, i) => {
           return (
             <QuizResultsForm
-              key={result._id}
+              key={result._id + i}
               _id={result._id}
               result={result}
               updateQuizResult={(_result) => updateQuizResult(_result)}

@@ -42,6 +42,7 @@ export const QuestionAnswerForm = ({ question, refresh }) => {
           {
             answer: {
               text: a.text,
+              description: a.desc,
               sequence: parseInt(a.sequence),
               question: { _link: question.id },
             },
@@ -50,6 +51,7 @@ export const QuestionAnswerForm = ({ question, refresh }) => {
             select: {
               id: true,
               text: true,
+              description: true,
               sequence: true,
               question: {
                 id: true,
@@ -96,6 +98,7 @@ export const QuestionAnswerForm = ({ question, refresh }) => {
               addAnswer({
                 _id,
                 text: "",
+                description: "",
                 sequence: 1,
                 question,
               });
