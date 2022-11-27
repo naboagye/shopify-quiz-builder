@@ -1,0 +1,36 @@
+<link rel="stylesheet" href="{{ 'quiz.css' | asset_url }}" media="print" onload="this.media='all'">
+
+<div class="page-width page-width--narrow">
+  <h1 class="main-page-title page-title h0">
+    {{ page.title | escape }}
+  </h1>
+  <div class="rte">
+    {{ page.content }}
+    <input type="hidden" id="quizid" value="{{quiz_id}}" />
+
+  </div>
+  <div>
+    <product-quiz class="quiz">
+
+      <form action="post" class="form" novalidate="validate">
+        <h2 class="product-quiz__title"></h2>
+        <div class="product-quiz__body">
+          <span>
+            <div id="loading" style="display:none">Loading...</div>
+          </span>
+        </div>
+        <div class="product-quiz__questions" id="questions">
+          <div class="product-quiz__question">
+              <span class="product-quiz__question-answer">
+              </span>
+          </div>
+        </div>
+
+        <div class="product-body">
+
+        </div>
+        <button type="submit" class="product-quiz__submit button button--secondary">Get my results!</button>
+      </form>
+    </product-quiz>
+  </div>
+</div>

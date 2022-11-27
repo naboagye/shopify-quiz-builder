@@ -1,0 +1,27 @@
+.product-quiz__question {
+  padding: 30px 10px;
+}
+
+.product-quiz__question-answers {
+  background: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 25px 20px; /* row-gap column gap */
+  padding: 10px;
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 14vh;
+  background-color: white;
+  color: #d4b195;
+}
+
+.answer:hover {
+  background-color: #d4b195 !important;
+  color: white !important;
+}
