@@ -1,13 +1,47 @@
-import { Card, FormLayout, Layout } from "@shopify/polaris";
+import {
+  Card,
+  FormLayout,
+  Layout,
+  Icon,
+  Tooltip,
+  Button,
+} from "@shopify/polaris";
+import { EditMajor } from "@shopify/polaris-icons";
 import _ from "lodash";
 
 export const MappedQuizAnswers = ({ mappedAnswers }) => {
   console.log(mappedAnswers);
+
+  const EditAnswerBtn = () => {
+    return (
+      <Tooltip content="Edit Answer" dismissOnMouseOut>
+        <Icon source={EditMajor} />
+      </Tooltip>
+    );
+  };
+
+  const handleEditAnswer = (id) => {
+    return api.answer.update(id, {
+      answer: {
+        text: a.text,
+        description: a.desc,
+        sequence: parseInt(a.sequence),
+        question: { _link: question.id },
+      },
+    });
+  };
+
   return (
     <Layout.Section>
       {mappedAnswers.map((r) => {
         return (
-          <Card title={"Question: " + r.node.title} key={r.node.id}>
+          <Card
+            title={"Question: " + r.node.title}
+            actions={[
+              { content: <EditAnswerBtn />, onAction: handleEditAnswer },
+            ]}
+            key={r.node.id}
+          >
             <FormLayout>
               <FormLayout.Group>
                 {r.node.answers.edges.map((a) => {

@@ -40,6 +40,7 @@ export default function Answers() {
   const currentQuiz = quiz.data;
   if (currentQuiz) {
     const currentQuestions = currentQuiz.questions.edges;
+    console.log(currentQuestions);
 
     const quizTitle = currentQuiz.title;
 

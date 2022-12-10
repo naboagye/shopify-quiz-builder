@@ -36,6 +36,7 @@ export const QuestionAnswerForm = ({ question, refresh }) => {
 
   const handleSubmitAnswers = () => {
     setIsSubmitting(true);
+    console.log(answers);
     Promise.all(
       answers.map((a) => {
         return api.answer.create(
