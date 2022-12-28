@@ -1,5 +1,6 @@
 .product-quiz__question {
   padding: 30px 10px;
+  width: 100%;
 }
 
 .product-quiz__question-answers {
@@ -24,4 +25,12 @@
 .answer:hover {
   background-color: #d4b195 !important;
   color: white !important;
+}
+
+.product-quiz__question:nth-of-type(odd) {
+  background: #fff;
+}
+
+.product-quiz__question:nth-of-type(even) {
+  background: #e1e1e1;
 }
