@@ -257,8 +257,12 @@ let selectedAnswers = [];
 function selectAnswer(answer) {
   selectedAnswers.push(answer);
   let elId = event.srcElement.id;
-  let parent = document.getElementById(elId).parentNode;
-  parent.innerHTML = "<h3>Answer selected</h3>";
+  answerElement = document.getElementById(elId);
+  answerChild = answerElement.children[0];
+  answerNestedChild = answerChild.children[0];
+  answerNestedChild.classList.add("selected-answer");
+  // let parent = document.getElementById(elId).parentNode;
+  // parent.innerHTML = "<h3>Answer selected</h3>";
 }
 
 fetchQuiz().then(function (quiz) {
@@ -277,16 +281,33 @@ fetchQuiz().then(function (quiz) {
           this.heading.innerHTML = quizData.title;
           this.body = this.querySelector(".product-quiz__body span");
           this.body.innerHTML = quizData.body;
-          this.questions = this.querySelector(".product-quiz__questions");
-          const questionContainer = this.querySelector(
-            ".product-quiz__question"
-          );
+          this.questions = this.querySelector(".slideshow-container");
+          const questionContainer = this.querySelector(".mySlides");
           const answerContainer = this.querySelector(
             ".product-quiz__question-answer"
           );
           const submitContainer = this.querySelector(".product-body");
+          const slideDots = this.querySelector(".slide-dots");
 
           submitContainer.innerHTML = "";
+
+          // questions.forEach((question,i) => {
+          //   slideDots.insertAdjacentHTML(
+          //     "beforeend",
+          //     '<span class="dot" onclick="currentSlide(' +
+          //       (i + 1) +
+          //       '}`)"></span>'
+          //   );
+          // });
+
+          for (let i = 1; i < questions.length; i++) {
+            slideDots.insertAdjacentHTML(
+              "beforeend",
+              '<span class="dot" onclick="currentSlide(' + i + ')"></span>'
+            );
+          }
+
+          console.log(this.questions.children[0]);
 
           let renderedQuestions = questions
             .sort((a, b) => a.node.sequence - b.node.sequence)
@@ -295,9 +316,9 @@ fetchQuiz().then(function (quiz) {
               clonedDiv.id = "question_" + i;
               clonedDiv.insertAdjacentHTML(
                 "beforeend",
-                "<div><h3>" +
+                "<div class='question-text'><h1>" +
                   question.node.title +
-                  "</h3><h4>" +
+                  "</h1><h4>" +
                   question.node.body +
                   "</h4><br/></div>"
               );
@@ -325,6 +346,8 @@ fetchQuiz().then(function (quiz) {
                   clonedDiv.children[2].appendChild(clonedSpan);
                 });
             });
+
+          this.questions.removeChild(this.questions.children[0]);
 
           this.form.addEventListener("submit", this.onSubmitHandler.bind(this));
         }

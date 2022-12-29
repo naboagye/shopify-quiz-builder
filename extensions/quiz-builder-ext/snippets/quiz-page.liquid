@@ -1,10 +1,41 @@
 <link rel="stylesheet" href="{{ 'quiz.css' | asset_url }}" media="print" onload="this.media='all'">
+<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  console.log(slides)
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {slideIndex = 1}    
+  if (n < 1) {slideIndex = slides.length}
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active";
+}
+
+</script>
 
 <div>
   <h1 class="main-page-title page-title h0">
   </h1>
   <div class="rte">
-    <input type="hidden" id="quizid" value="{{quiz_id}}" />
+    <input type="hidden" id="quizid" value="{{ quiz_id }}" />
+    
 
   </div>
   <div>
@@ -17,11 +48,19 @@
             <div id="loading" style="display:none">Loading...</div>
           </span>
         </div>
-        <div class="product-quiz__questions" id="questions">
-          <div class="product-quiz__question">
-              <span class="product-quiz__question-answer">
+        <div class="slideshow-container" id="questions">
+          <div class="mySlides fade">
+            <span class="product-quiz__question-answer">
               </span>
           </div>
+          <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+          <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+        </div>
+        <br>
+
+        <!-- The dots/circles -->
+        <div class="slide-dots" style="text-align:center">
         </div>
 
         <div class="product-body">
