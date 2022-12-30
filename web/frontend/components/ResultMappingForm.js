@@ -40,7 +40,23 @@ export const ResultMappingForm = ({ quizResult, quiz }) => {
     Promise.all(
       selectedAnswers.map((answer) => {
         const printRecord = async () => {
-          const answerRecord = await api.answer.findOne(parseInt(answer));
+          console.log(answer);
+          const answerRecord = await api.answer.findById(parseInt(answer), {
+            select: {
+              id: true,
+              createdAt: true,
+              description: true,
+              sequence: true,
+              result: {
+                id: true,
+              },
+              state: true,
+              text: true,
+              question: {
+                id: true,
+              },
+            },
+          });
           console.log(answerRecord);
           if (answerRecord.result !== null) {
             return api.answer.create(

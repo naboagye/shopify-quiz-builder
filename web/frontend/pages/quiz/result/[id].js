@@ -47,9 +47,15 @@ export default function Result() {
 
   if (response[0].data) {
     const result = response[0].data.result;
+    console.log(response);
     const productSuggestion = result.productSuggestion;
-    const productImageUrl = productSuggestion.product.images.edges[0].node.source;
-    const productUrl = `https://` + productSuggestion.shop.domain + `/products/` + productSuggestion.product.handle;
+    const productImageUrl =
+      productSuggestion.product.images.edges[0].node.source;
+    const productUrl =
+      `https://` +
+      productSuggestion.shop.domain +
+      `/products/` +
+      productSuggestion.product.handle;
 
     return (
       <>
@@ -63,12 +69,23 @@ export default function Result() {
                 <Layout.Section>
                   <Stack vertical>
                     <Stack.Item>
-                      <Card title={`${productSuggestion.product.title} - ${productSuggestion.title}`}>
-                        <Layout.Section>{result.imageUrl && <Image src={result.imageUrl} />}</Layout.Section>
+                      <Card
+                        title={`${productSuggestion.product.title} - ${productSuggestion.title}`}
+                      >
+                        <Layout.Section>
+                          {result.imageUrl && <Image src={result.imageUrl} />}
+                        </Layout.Section>
                         <Layout.Section>
                           <Card title="About your result">
                             <Layout.Section>
-                              {productImageUrl && <img src={productImageUrl} width="50%" height="50%" alt="Product image" />}
+                              {productImageUrl && (
+                                <img
+                                  src={productImageUrl}
+                                  width="50%"
+                                  height="50%"
+                                  alt="Product image"
+                                />
+                              )}
                               <br />
                               {productSuggestion.product.body}
                               <br />
