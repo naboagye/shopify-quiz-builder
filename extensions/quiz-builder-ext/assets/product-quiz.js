@@ -300,7 +300,7 @@ fetchQuiz().then(function (quiz) {
           //   );
           // });
 
-          for (let i = 1; i < questions.length; i++) {
+          for (let i = 1; i <= questions.length; i++) {
             slideDots.insertAdjacentHTML(
               "beforeend",
               '<span class="dot" onclick="currentSlide(' + i + ')"></span>'
@@ -316,9 +316,9 @@ fetchQuiz().then(function (quiz) {
               clonedDiv.id = "question_" + i;
               clonedDiv.insertAdjacentHTML(
                 "beforeend",
-                "<div class='question-text'><h1>" +
+                "<div class='question-text'><h2>" +
                   question.node.title +
-                  "</h1><h4>" +
+                  "</h2><h4>" +
                   question.node.body +
                   "</h4><br/></div>"
               );

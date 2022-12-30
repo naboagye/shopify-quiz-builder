@@ -8,13 +8,16 @@ function plusSlides(n) {
 }
 
 function currentSlide(n) {
+  const s = document.getElementsByClassName("start");
+  if (s[0].style.display = "block"){
+    s[0].style.display = "none"; 
+  }
   showSlides(slideIndex = n);
 }
 
 function showSlides(n) {
   let i;
   let slides = document.getElementsByClassName("mySlides");
-  console.log(slides)
   let dots = document.getElementsByClassName("dot");
   if (n > slides.length) {slideIndex = 1}    
   if (n < 1) {slideIndex = slides.length}
@@ -26,6 +29,13 @@ function showSlides(n) {
   }
   slides[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " active";
+}
+
+function handleClick(){
+  currentSlide(1)
+  const s = document.getElementsByClassName("start");
+  console.log(s[0])
+  s[0].style.display = "none"; 
 }
 
 </script>
@@ -42,16 +52,23 @@ function showSlides(n) {
     <product-quiz class="quiz">
 
       <form action="post" class="form" novalidate="validate">
-        <h2 class="product-quiz__title"></h2>
-        <div class="product-quiz__body">
-          <span>
-            <div id="loading" style="display:none">Loading...</div>
-          </span>
-        </div>
+
         <div class="slideshow-container" id="questions">
           <div class="mySlides fade">
             <span class="product-quiz__question-answer">
               </span>
+          </div>
+          <div class="start" style="text-align:center">
+            <span class="product-quiz__question-answer">
+              </span>
+              <h2 class="product-quiz__title"></h2>
+              <div class="product-quiz__body">
+                <span>
+                  <div id="loading" style="display:none">Loading...</div>
+                </span>
+                <br>
+                <button onclick="handleClick()" class="product-quiz__submit button button--secondary">START QUIZ</button>
+              </div>
           </div>
           <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
           <a class="next" onclick="plusSlides(1)">&#10095;</a>
