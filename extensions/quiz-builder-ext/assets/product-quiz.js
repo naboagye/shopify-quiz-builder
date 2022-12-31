@@ -255,12 +255,14 @@ async function fetchQuiz() {
 loading();
 let selectedAnswers = [];
 function selectAnswer(answer) {
+  console.log("on clicked called")
   selectedAnswers.push(answer);
-  let elId = event.srcElement.id;
-  answerElement = document.getElementById(elId);
-  answerChild = answerElement.children[0];
-  answerNestedChild = answerChild.children[0];
-  answerNestedChild.classList.add("selected-answer");
+  // let elId = event.srcElement.id;
+  // answerElement = document.getElementById(elId);
+  // answerChild = answerElement.children[0];
+  // answerChild.classList.add("selected-answer");
+  // answerNestedChild = answerChild.children[0];
+  // answerNestedChild.classList.add("selected-answer");
   // let parent = document.getElementById(elId).parentNode;
   // parent.innerHTML = "<h3>Answer selected</h3>";
 }
@@ -303,7 +305,7 @@ fetchQuiz().then(function (quiz) {
           for (let i = 1; i <= questions.length; i++) {
             slideDots.insertAdjacentHTML(
               "beforeend",
-              '<span class="dot" onclick="currentSlide(' + i + ')"></span>'
+              `<span class="dot" onclick="currentSlide(${i})"></span>`
             );
           }
 
@@ -316,18 +318,23 @@ fetchQuiz().then(function (quiz) {
               clonedDiv.id = "question_" + i;
               clonedDiv.insertAdjacentHTML(
                 "beforeend",
-                "<div class='question-text'><h2>" +
+                "<div class='question-text'><h1>" +
                   question.node.title +
-                  "</h2><h4>" +
+                  "</h1><h4>" +
                   question.node.body +
                   "</h4><br/></div>"
               );
               clonedDiv.insertAdjacentHTML(
                 "beforeend",
-                '<div class="product-quiz__question-answers"></div>'
+                '<div class="product-quiz__question-answers"></div><button type="submit" class="product-quiz__submit button button--secondary">SHOW RESULTS</button>'
               );
               this.questions.appendChild(clonedDiv);
-              let answers = question.node.answers.edges;
+
+              // let answers = [...new Set(question.node.answers.edges.text)];
+              let answers = (question.node.answers.edges).filter((value,index,self) =>
+                self.findIndex(v => v.node.text === value.node.text) === index
+              );
+              console.log(answers)
               answers
                 .sort((a, b) => b.node.sequence - a.node.sequence)
                 .forEach((answer, j) => {
@@ -335,15 +342,18 @@ fetchQuiz().then(function (quiz) {
                   clonedSpan.id = "answer_" + i + "_" + j;
                   clonedSpan.insertAdjacentHTML(
                     "beforeend",
-                    '<span><a class="button answer" id="' +
-                      clonedSpan.id +
-                      '" onClick=(selectAnswer(' +
-                      answer.node.id +
-                      "))>" +
-                      answer.node.text +
-                      "</a><br/></span><br/> "
+                    `<div class = "answers_checkbox answer cat action" id="${clonedSpan.id}" onClick=(selectAnswer(${answer.node.id})) >
+                      <label>
+                        <input type="checkbox" value="1">
+                          <span>
+                            <a>${answer.node.text}</a>
+                          </span>
+                      </label>
+                    <div>
+                    <br/>
+                    <br/>`
                   );
-                  clonedDiv.children[2].appendChild(clonedSpan);
+                  clonedDiv.children[4].appendChild(clonedSpan);
                 });
             });
 

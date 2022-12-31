@@ -9,7 +9,7 @@ function plusSlides(n) {
 
 function currentSlide(n) {
   const s = document.getElementsByClassName("start");
-  if (s[0].style.display = "block"){
+  if (s[0].style.display = "flex"){
     s[0].style.display = "none"; 
   }
   showSlides(slideIndex = n);
@@ -27,7 +27,8 @@ function showSlides(n) {
   for (i = 0; i < dots.length; i++) {
     dots[i].className = dots[i].className.replace(" active", "");
   }
-  slides[slideIndex-1].style.display = "block";  
+  slides[slideIndex-1].style.display = "flex";
+  slides[slideIndex-1].style.flexDirection = "column";  
   dots[slideIndex-1].className += " active";
 }
 
@@ -57,7 +58,16 @@ function handleClick(){
           <div class="mySlides fade">
             <span class="product-quiz__question-answer">
               </span>
-          </div>
+            <!-- The dots/circles -->
+            <div class="slide-dots" style="text-align:center">
+            </div>
+
+            <div class="product-body">
+
+            </div>
+            
+            
+              </div>
           <div class="start" style="text-align:center">
             <span class="product-quiz__question-answer">
               </span>
@@ -70,20 +80,13 @@ function handleClick(){
                 <button onclick="handleClick()" class="product-quiz__submit button button--secondary">START QUIZ</button>
               </div>
           </div>
+                          
+
           <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
           <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
         </div>
         <br>
-
-        <!-- The dots/circles -->
-        <div class="slide-dots" style="text-align:center">
-        </div>
-
-        <div class="product-body">
-
-        </div>
-        <button type="submit" class="product-quiz__submit button button--secondary">SHOW RESULTS</button>
       </form>
     </product-quiz>
   </div>
