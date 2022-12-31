@@ -64,6 +64,7 @@ async function updateAnswers(answers, response) {
 }
 
 async function createResponse(quiz) {
+  const Quiz = quiz.quiz;
   const response = await GadgetClient.mutate(
     `
    mutation ( $response: CreateResponseInput) { createResponse(response: $response) {
@@ -117,7 +118,7 @@ async function createResponse(quiz) {
      }
    }
  `,
-    { response: { quiz: { _link: quiz.id }, conversionState: "in progress" } }
+    { response: { quiz: { _link: Quiz.id }, conversionState: "in progress" } }
   );
   return response;
 }
@@ -255,7 +256,6 @@ async function fetchQuiz() {
 loading();
 let selectedAnswers = [];
 function selectAnswer(answer) {
-  console.log("on clicked called")
   selectedAnswers.push(answer);
   // let elId = event.srcElement.id;
   // answerElement = document.getElementById(elId);
@@ -309,8 +309,6 @@ fetchQuiz().then(function (quiz) {
             );
           }
 
-          console.log(this.questions.children[0]);
-
           let renderedQuestions = questions
             .sort((a, b) => a.node.sequence - b.node.sequence)
             .forEach((question, i) => {
@@ -331,10 +329,11 @@ fetchQuiz().then(function (quiz) {
               this.questions.appendChild(clonedDiv);
 
               // let answers = [...new Set(question.node.answers.edges.text)];
-              let answers = (question.node.answers.edges).filter((value,index,self) =>
-                self.findIndex(v => v.node.text === value.node.text) === index
+              let answers = question.node.answers.edges.filter(
+                (value, index, self) =>
+                  self.findIndex((v) => v.node.text === value.node.text) ===
+                  index
               );
-              console.log(answers)
               answers
                 .sort((a, b) => b.node.sequence - a.node.sequence)
                 .forEach((answer, j) => {

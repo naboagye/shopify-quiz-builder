@@ -47,7 +47,6 @@ export default function Result() {
 
   if (response[0].data) {
     const result = response[0].data.result;
-    console.log(response);
     const productSuggestion = result.productSuggestion;
     const productImageUrl =
       productSuggestion.product.images.edges[0].node.source;
