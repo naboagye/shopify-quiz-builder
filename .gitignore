@@ -1,7 +1,6 @@
 # Environment Configuration
 .env
 .env.*
-.npmrc
 .dockerignore
 .vscode/
 web/frontend/.next
