@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@gadget-client/curlsfusion-hair-quiz": "npm:@gadget-client/curlsfusionhairquiz@latest",
     "@gadgetinc/react": "^0.7.2",
     "@shopify/app-bridge": "^3.1.0",
     "@shopify/app-bridge-react": "^3.1.0",
