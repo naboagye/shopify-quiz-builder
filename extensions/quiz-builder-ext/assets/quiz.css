@@ -71,6 +71,15 @@
   color: white !important;
 }
 
+.answer input:disabled {
+  background-color:#bbb !important;
+  color: #d4b195 !important;
+}
+
+.answer:hover input:disabled {
+  background-color:#bbb !important;
+  color: #d4b195 !important;
+}
 .selected-answer {
   background-color: #d4b195 !important;
   color: white !important;

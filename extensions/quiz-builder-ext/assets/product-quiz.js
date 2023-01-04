@@ -3,7 +3,7 @@ async function loading() {
     "https://curlsfusion-hair-quiz.gadget.app/api/client/web.min.js"
   );
   window.GadgetClient = new Gadget({
-    authenticationMode: { apiKey: "" },
+    authenticationMode: { apiKey: "gsk-8PYUwygVTyfmFH3pZc4WqprRnXjjPFc9" },
   });
 }
 
@@ -273,8 +273,12 @@ function getNumberOfCheckedAnswers(questionNumber){
 }
 
 function disableRemainingAnswers(questionNumber){
+  console.log("disable remaining answers called")
   all_checkboxes = Array.from(document.getElementsByClassName("answer_checkbox"))
+  console.log(all_checkboxes[0].value)
+  
   checkboxes_for_question = all_checkboxes.filter(checkbox => checkbox.value == questionNumber)
+  console.log(checkboxes_for_question)
   for (checkbox in checkboxes_for_question.disabled){
     if (!checkbox.checked){
       checkbox.disable = true
@@ -286,40 +290,54 @@ function disableRemainingAnswers(questionNumber){
 loading();
 let selectedAnswers = [];
 
-function unselectAnswer(answer) {
+function unselectAnswer(answer, questionNumber) {
   selectedAnswers.splice(selectedAnswers.indexOf(answer),1)
   //implement unselect answer
   // you unselect an answer if an answer is already present when you go to run select answer 
+  enableAnswers(questionNumber)
+
+}
+
+function enableAnswers(questionNumber){
+  console.log("enable answers called")
+  all_checkboxes = Array.from(document.getElementsByClassName("answer_checkbox"))
+  checkboxes_for_question = all_checkboxes.filter(checkbox => checkbox.value == questionNumber)
+  for (checkbox in checkboxes_for_question.disabled){
+      if(checkbox.disabled == true){
+        checkbox.disabled = false
+      }
+  }
 }
 
 function selectAnswer(answer, questionNumber) {
-  console.log("on clicked called")
+
+  console.log("selectAnswer called")
+  let elId = event.srcElement.id;
+  answerElement = document.getElementById(elId);
+  console.log(answerElement)
+  answerElement.classList.add("selected-answer");
+  
   //first check that the answer is not already selected and should be unselected.
   if(selectedAnswers.indexOf(answer) != -1){
-    unselectAnswer(answer)
-  }else
-  {
-    x = getAnswerlimit(questionNumber) - getNumberOfCheckedAnswers(questionNumber)
-    console.log("X:" + x)
+    console.log("answer if already selected")
+    unselectAnswer(answer,questionNumber)
+  }
+  else if(getAnswerlimit(questionNumber) <= 1)
+  { 
+    selectedAnswers.push(answer);
+    disableRemainingAnswers(questionNumber)
     
-    if (x >= 0){
-      selectedAnswers.push(answer);
-    }
-    if (x == 0){
-      disableRemainingAnswers(questionNumber)
-    }
-    else {
-      console.log("Answer limit reached")
-    }
-
     // let elId = event.srcElement.id;
     // answerElement = document.getElementById(elId);
     // answerChild = answerElement.children[0];
-    // answerChild.classList.add("selected-answer");
     // answerNestedChild = answerChild.children[0];
     // answerNestedChild.classList.add("selected-answer");
     // let parent = document.getElementById(elId).parentNode;
     // parent.innerHTML = "<h3>Answer selected</h3>";
+    
+  }
+  else {
+    console.log(getAnswerlimit(questionNumber))
   }
 }
 
@@ -399,7 +417,7 @@ fetchQuiz().then(function (quiz) {
                     "beforeend",
                     `<div class = "answers_checkbox answer cat action q${i}_answer" id="${clonedSpan.id}" onClick=(selectAnswer(${answer.node.id},${i})) >
                       <label>
-                        <input class="answer_checkbox" type="checkbox" value=${i}">
+                        <input class="answer_checkbox" type="checkbox" value=${i}>
                           <span>
                             <a>${answer.node.text}</a>
                           </span>
