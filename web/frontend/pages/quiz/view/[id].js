@@ -1,8 +1,35 @@
-import { useFindOne } from "@gadgetinc/react";
-import { Card, Frame, Layout, Page, Stack } from "@shopify/polaris";
+import { useFindOne, useFindMany } from "@gadgetinc/react";
+import { Card, Frame, Layout, Page, Stack, Button } from "@shopify/polaris";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { api } from "./../../../api.js";
+
+// export async function getStaticPaths() {
+//   // Call an external API endpoint to get posts
+//   const data = useFindMany(api.quiz, {
+//     select: { id: true, title: true, body: true },
+//   });
+
+//   // Get the paths we want to prerender based on posts
+//   // In production environments, prerender all pages
+//   // (slower builds, but faster initial page load)
+//   const paths = data.map((quiz) => ({
+//     params: { id: quiz.id },
+//   }));
+
+//   return {
+//     paths,
+//     fallback: false, // can also be true or 'blocking'
+//   };
+// }
+
+// // `getStaticPaths` requires using `getStaticProps`
+// export async function getStaticProps(context) {
+//   return {
+//     // Passed to the page component as props
+//     props: { post: {} },
+//   };
+// }
 
 export default function View() {
   const urlRouter = useRouter();
@@ -72,7 +99,15 @@ export default function View() {
         </Head>
         <>
           <Frame>
-            <Page title={currentQuiz.title} divider primaryAction={{ content: "Take the quiz!", url: responseUrl }}>
+            <Page
+              title={currentQuiz.title}
+              divider
+              primaryAction={
+                <Button primary onClick={() => urlRouter.push(responseUrl)}>
+                  Take the quiz!
+                </Button>
+              }
+            >
               <Layout>
                 <Layout.Section>
                   <Stack vertical>

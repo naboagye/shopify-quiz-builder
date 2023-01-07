@@ -1,4 +1,4 @@
-import { useAction, useFindOne } from "@gadgetinc/react";
+import { useAction, useFindOne, useFindMany } from "@gadgetinc/react";
 import { Button, Card, Frame, Layout, Page, Stack } from "@shopify/polaris";
 import Head from "next/head";
 import { useState } from "react";
@@ -7,14 +7,49 @@ import { api } from "./../../../api.js";
 import { QuestionCard } from "../../../components/QuestionCard.js";
 import _ from "lodash";
 
+// Generates `/posts/1` and `/posts/2`
+// export async function getStaticPaths() {
+//   // Call an external API endpoint to get posts
+//   const data = useFindMany(api.quiz, {
+//     select: { id: true, title: true, body: true },
+//   });
+
+//   // Get the paths we want to prerender based on posts
+//   // In production environments, prerender all pages
+//   // (slower builds, but faster initial page load)
+//   const paths = data.map((quiz) => ({
+//     params: { id: quiz.id },
+//   }));
+
+//   return {
+//     paths,
+//     fallback: false, // can also be true or 'blocking'
+//   };
+// }
+
+// // `getStaticPaths` requires using `getStaticProps`
+// export async function getStaticProps(context) {
+//   const { params } = context;
+
+//   const data = useFindOne(api.quiz, params.id, {
+//     select: { id: true, title: true, body: true },
+//   });
+//   return {
+//     // Passed to the page component as props
+//     props: { post },
+//   };
+// }
+
 export default function Respond() {
   const [result, setResult] = useState([]);
   const [errors, setErrors] = useState(null);
   const [responseAnswers, setResponseAnswers] = useState([]);
 
-  const router = useRouter();
+  const urlRouter = useRouter();
 
-  const quiz = useFindOne(api.quiz, router.query.id, {
+  console.log(urlRouter.query.id);
+
+  const quiz = useFindOne(api.quiz, parseInt(urlRouter.query.id), {
     select: {
       id: true,
       title: true,
@@ -92,10 +127,10 @@ export default function Respond() {
     });
 
     console.log(`Create response result:`, _result);
-    if (_result.data.createResponse.response) {
-      setCreatedResponse(_result.data.createResponse.response);
-    } else if (_result.error || _result.data.createResponse.errors) {
-      setErrors(_result.error || _result.data.createResponse.errors);
+    if (_result.data) {
+      setCreatedResponse(_result.data);
+    } else if (_result.error) {
+      setErrors(_result.error);
     }
   };
 
@@ -164,7 +199,7 @@ export default function Respond() {
       .then((result) => {
         console.log(`Updated Response: ` + result);
         setCreatedResponse(result);
-        router.push(`/quiz/result/${_responseId}`);
+        urlRouter.push(`/quiz/result/${_responseId}`);
       });
   }
 
