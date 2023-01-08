@@ -46,10 +46,10 @@ export default function Create() {
     });
     setIsSubmittingNewQuiz(false);
     console.log(`Create quiz result:`, _result);
-    if (_result.data.createQuiz.quiz) {
-      setCreatedQuiz(_result.data.createQuiz.quiz);
-    } else if (_result.error || _result.data.createQuiz.errors) {
-      setError(_result.error || _result.data.createQuiz.errors);
+    if (_result.data) {
+      setCreatedQuiz(_result.data);
+    } else if (_result.error) {
+      setError(_result.error);
     }
   };
 

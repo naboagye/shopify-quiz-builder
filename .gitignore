@@ -1,7 +1,6 @@
 # Environment Configuration
 .env
 .env.*
-.npmrc
 .dockerignore
 .vscode/
 web/frontend/.next
@@ -30,3 +29,4 @@ extensions/*/build
 
 # Node library SQLite database
 web/database.sqlite
+.vercel
