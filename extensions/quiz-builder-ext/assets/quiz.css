@@ -66,23 +66,24 @@
   color:#fff;
 }
 
+.disabled_answer:hover{
+  background-color:grey !important;
+  color: #fff !important;
+}
+
 .answer:hover {
   background-color: #d4b195 !important;
   color: white !important;
 }
 
-.answer input:disabled {
-  background-color:#bbb !important;
-  color: #d4b195 !important;
-}
-
-.answer:hover input:disabled {
-  background-color:#bbb !important;
-  color: #d4b195 !important;
-}
 .selected-answer {
   background-color: #d4b195 !important;
   color: white !important;
+}
+
+.disabled_answer{
+  background-color:grey !important;
+  color: #fff !important;
 }
 
 .product-quiz__question:nth-of-type(odd) {

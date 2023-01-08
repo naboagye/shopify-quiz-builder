@@ -278,12 +278,15 @@ function disableRemainingAnswers(questionNumber){
   console.log(all_checkboxes[0].value)
   
   checkboxes_for_question = all_checkboxes.filter(checkbox => checkbox.value == questionNumber)
-  console.log(checkboxes_for_question)
-  for (checkbox in checkboxes_for_question.disabled){
-    if (!checkbox.checked){
-      checkbox.disable = true
-    }
-  }
+  console.log("checkboxes: " + checkboxes_for_question)
+  checkboxes_for_question.forEach(item => {
+    if(item.checked == false) {
+        item.disabled = true
+        item.parentElement.parentElement.classList.add("disabled_answer")
+        console.log(item.parentElement.parentElement)
+        }
+    }    
+);
 }
 
 
@@ -309,15 +312,18 @@ function enableAnswers(questionNumber){
   }
 }
 
-function selectAnswer(answer, questionNumber) {
+function selectAnswer(answer, questionNumber, elementId) {
 
   console.log("selectAnswer called")
-  let elId = event.srcElement.id;
-  answerElement = document.getElementById(elId);
+  answerElement = document.getElementById(elementId);
   console.log(answerElement)
   answerElement.classList.add("selected-answer");
   
+
   //first check that the answer is not already selected and should be unselected.
+  console.log(answer)
+  console.log(selectedAnswers)
+
   if(selectedAnswers.indexOf(answer) != -1){
     console.log("answer if already selected")
     unselectAnswer(answer,questionNumber)
@@ -415,7 +421,7 @@ fetchQuiz().then(function (quiz) {
                   clonedSpan.id = "answer_" + i + "_" + j;
                   clonedSpan.insertAdjacentHTML(
                     "beforeend",
-                    `<div class = "answers_checkbox answer cat action q${i}_answer" id="${clonedSpan.id}" onClick=(selectAnswer(${answer.node.id},${i})) >
+                    `<div class = "answers_checkbox answer cat action q${i}_answer" id="${clonedSpan.id}" onClick=(selectAnswer(${answer.node.id},${i},this.id)) >
                       <label>
                         <input class="answer_checkbox" type="checkbox" value=${i}>
                           <span>
